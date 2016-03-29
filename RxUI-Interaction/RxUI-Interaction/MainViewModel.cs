@@ -38,7 +38,7 @@
                     IsBroken = GetIsBroken(),
                 });
 
-            var fixedToys = toyGenerator
+            var toys = toyGenerator
                 .SelectMany(
                     t =>
                     {
@@ -51,9 +51,9 @@
                         return Observable.Return(t);
                     });
 
-            fixedToys
+            toys
                 .ObserveOnDispatcher()
-                .Subscribe(t => FixedToys.Add(t));
+                .Subscribe(t => Toys.Add(t));
         }
 
         private static bool GetIsBroken()
@@ -61,13 +61,18 @@
             return Random.Next(0, 2) > 0;
         }
 
-        public ReactiveList<Toy> FixedToys { get; set; } = new ReactiveList<Toy>();
+        public ReactiveList<Toy> Toys { get; set; } = new ReactiveList<Toy>();
 
         private void FixToy(InteractionContext<Toy, Toy> context)
         {
             var inputToy = context.Input;
             inputToy.IsBroken = false;
             context.SetOutput(inputToy);
+        }
+
+        public Interaction<Toy, Toy> FixToyInteraction
+        {
+            get { return this.fixToyInteraction; }
         }
     }
 }

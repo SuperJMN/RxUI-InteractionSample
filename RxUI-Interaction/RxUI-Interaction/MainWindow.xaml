@@ -6,13 +6,19 @@
         xmlns:local="clr-namespace:RxUI_Interaction"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance local:MainViewModel}">
-   
-    <Window.DataContext>
-        <local:MainViewModel />
-    </Window.DataContext>
+
     <Grid>
         <GroupBox Header="Incoming toys">
-            <DataGrid ItemsSource="{Binding FixedToys}" CanUserAddRows="False" IsReadOnly="True"  HorizontalContentAlignment="Stretch" AutoGenerateColumns="True" />
+            <Grid>
+                <DataGrid ItemsSource="{Binding Toys}" CanUserAddRows="False" IsReadOnly="True"
+                          HorizontalContentAlignment="Stretch" AutoGenerateColumns="True" />
+                <Border x:Name="brokenToyPanel" Background="Red" VerticalAlignment="Bottom" Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                        <Label x:Name="fixItLabel">A toy is broken, can you fix it?</Label>
+                        <Button x:Name="fixItButton">FIX IT!</Button>
+                    </StackPanel>
+                </Border>
+            </Grid>
         </GroupBox>
     </Grid>
 </Window>
